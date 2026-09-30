@@ -1,0 +1,4 @@
+file 'D:/NAWI-System/media/temp_video/scene6_part0.mp4'
+file 'D:/NAWI-System/media/temp_video/scene6_part1.mp4'
+file 'D:/NAWI-System/media/temp_video/scene6_part2.mp4'
+file 'D:/NAWI-System/media/temp_video/scene6_part3.mp4'
