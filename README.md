@@ -228,3 +228,6 @@ cd NAWI-System/backend
 - **⏳ Phase 5: Historical Reports & Audit Logs**
   - Complete tamper-proof audit trail and regulatory compliance archiving.
 # sih20206
+# sih22w git init git add . git commit -m first commit git branch -M main git remote add origin https://github.com/hetanshaghara-oss/sih22w.git git push -u origin main
+# sih22w git init git add . git commit -m first commit git branch -M main git remote add origin https://github.com/hetanshaghara-oss/sih22w.git git push -u origin main
+# sih22w
