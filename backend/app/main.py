@@ -13,8 +13,9 @@ app = FastAPI(
     title=settings.PROJECT_NAME,
     description="Laboratory Management and NAWI Testing Application based on OIML R 76 - Phase 1 Foundation",
     version="1.0.0",
-    docs_url="/docs",
-    redoc_url="/redoc",
+    docs_url="/api/docs",
+    redoc_url="/api/redoc",
+    openapi_url="/api/openapi.json",
 )
 
 # CORS Middleware
