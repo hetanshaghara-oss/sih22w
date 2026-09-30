@@ -12,9 +12,11 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24  # 24 hours
 
     # Database
-    # Default to sqlite:///./nawi.db for immediate local running without requiring external daemon,
-    # or set DATABASE_URL=postgresql://postgres:postgres@localhost:5432/nawi_db in .env
-    DATABASE_URL: str = "sqlite:///./nawi.db"
+    # Default to sqlite:///./nawi.db locally, or sqlite:////tmp/nawi.db on Vercel serverless (where root is read-only)
+    DATABASE_URL: str = os.getenv(
+        "DATABASE_URL",
+        "sqlite:////tmp/nawi.db" if os.getenv("VERCEL") else "sqlite:///./nawi.db"
+    )
 
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [

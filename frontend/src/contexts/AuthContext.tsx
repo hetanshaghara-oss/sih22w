@@ -8,6 +8,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
+  mockLogin: (role: UserRole) => Promise<void>;
   logout: () => void;
   refreshUser: () => Promise<void>;
 }
@@ -23,10 +24,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const urlParams = new URLSearchParams(window.location.search);
     const autoRole = urlParams.get('auto_auth');
     if (autoRole) {
-      const email = autoRole === 'tester' ? 'tester@nawi-lab.org' : autoRole === 'reviewer' ? 'reviewer@nawi-lab.org' : 'admin@nawi-lab.org';
-      const pwd = autoRole === 'tester' ? 'Tester@12345' : autoRole === 'reviewer' ? 'Reviewer@12345' : 'Admin@12345';
       try {
-        await login(email, pwd);
+        const resp = authService.mockLogin(autoRole);
+        const currentUser = await authService.getCurrentUser();
+        setUser(currentUser);
+        setRole(resp.role);
+        setIsLoading(false);
         return;
       } catch (e) {
         console.warn('Auto auth fallback:', e);
@@ -62,7 +65,18 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setIsLoading(true);
     try {
       const resp = await authService.login(email, password);
-      // Fetch full profile
+      const currentUser = await authService.getCurrentUser();
+      setUser(currentUser);
+      setRole(resp.role);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const mockLogin = async (mockRole: UserRole) => {
+    setIsLoading(true);
+    try {
+      const resp = authService.mockLogin(mockRole);
       const currentUser = await authService.getCurrentUser();
       setUser(currentUser);
       setRole(resp.role);
@@ -95,6 +109,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         isAuthenticated: !!user,
         isLoading,
         login,
+        mockLogin,
         logout,
         refreshUser,
       }}
